@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+
+<head>
+	<title>Shoe Galaxy</title>
+	<meta charset="utf-8">
+</head>
+
+<body>
+
+	<!-- Carousel Banner -->
+	<div id="carouselExampleIndicators" data-aos="fade-up" class="container-fluid col-sm-10 carousel slide">
+		<div class="carousel-indicators">
+			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+				aria-current="true" aria-label="Slide 1"></button>
+			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+				aria-label="Slide 2"></button>
+			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+				aria-label="Slide 3"></button>
+		</div>
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<figure class="image">
+					<img src="images/slide1.webp" class="d-block w-100" style="height: 500px" alt="...">
+				</figure>
+			</div>
+			<div class="carousel-item">
+				<figure class="image">
+					<img src="images/bannershoe2.webp" class="d-block w-100" style="height: 500px" alt="...">
+				</figure>
+			</div>
+			<div class="carousel-item">
+				<figure class="image">
+					<img src="images/slide2.jpg" class="d-block w-100" style="height: 500px" alt="...">
+				</figure>
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+			data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+			data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+
+	<!-- Products Section -->
+	<div class="container mt-5 mb-3" data-aos="fade-up">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="big-sale">SẢN PHẨM</h1>
+			</div>
+
+			<!-- Loop through products -->
+			<div class="col-md-3 col-6 col-sm-6" th:each="product : ${products}" th:if="${product.available}">
+				<div class="product-card-shoe">
+					<div class="product-image-container">
+						<img class="product-image-shoe" th:if="${product.images != null and !product.images.isEmpty()}"
+							th:src="@{|/images/${product.images[0].image}|}" th:alt="${product.name}">
+						<img class="product-image-shoe"
+							th:unless="${product.images != null and !product.images.isEmpty()}"
+							src="images/placeholder.jpg" th:alt="${product.name}">
+					</div>
+					<div class="product-details-shoe">
+						<div class="product-title-shoe text-truncate" th:text="${product.name}">Product Name</div>
+						<div class="product-price-shoe" th:text="'$' + ${product.price}">$0</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Banner -->
+	<div class="container-fluid col-sm-10 mt-5" data-aos="fade-up">
+		<img src="images/banner5.jpg" style="height: 350px; width: 100%" alt="...">
+	</div>
+
+	<!-- Footer Icons -->
+	<div class="site-section site-section-sm site-blocks-1 border-0" data-aos="fade">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up">
+					<div class="icon mr-4 align-self-start">
+						<span class="icon-truck"></span>
+					</div>
+					<div class="text">
+						<h2 class="text-uppercase">Free Shipping</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="icon mr-4 align-self-start">
+						<span class="icon-refresh2"></span>
+					</div>
+					<div class="text">
+						<h2 class="text-uppercase">Free Returns</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="200">
+					<div class="icon mr-4 align-self-start">
+						<span class="icon-help"></span>
+					</div>
+					<div class="text">
+						<h2 class="text-uppercase">Customer Support</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
