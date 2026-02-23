@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+<head>
+<title th:text="${prod.name}"></title>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="site-sectionn">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<!-- Carousel -->
+					<div id="demo" class="carousel slide" data-bs-ride="carousel">
+						<ol class="carousel-indicators align-item-center">
+							<li th:each="i, iterStat : ${prod.images}" data-target="#demo"
+								data-slide-to="[[${iterStat.index}]]"
+								th:classappend="${iterStat.index == 0} ? 'active' : ''">
+								<img th:src="@{|/images/${i.image}|}"
+									class="d-block w-100 img-thumbnail" width="150%">
+							</li>
+						</ol>
+
+						<div class="carousel-inner" style="align-items: center;">
+							<div class="carousel-item" th:each="i, iterStat : ${prod.images}"
+								th:classappend="${iterStat.index == 0} ? 'active' : ''">
+								<img th:src="@{|/images/${i.image}|}" class="d-block w-100"
+									style="border-radius: 50px;">
+							</div>
+						</div>
+
+						<button class="carousel-control-prev" type="button"
+							data-target="#demo" data-slide="prev">
+							<span class="carousel-control-prev-icon"></span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-target="#demo" data-slide="next">
+							<span class="carousel-control-next-icon"></span>
+						</button>
+					</div>
+				</div>
+
+				<div class="col-md-6 mt-5" style="border-left: 1px dashed wheat;">
+					<h3 th:text="${prod.name}" class="mb-3"></h3>
+
+					<!-- Price with discount -->
+					<div class="mt-4 mb-3"
+						th:if="${prod.discountProduct != null and not #lists.isEmpty(prod.discountProduct)}">
+						<div class="d-flex flex-row align-items-center"
+							th:if="${T(java.time.LocalDate).now().isAfter(prod.discountProduct[0].start_Date) and T(java.time.LocalDate).now().isBefore(prod.discountProduct[0].end_Date)
+						or T(java.time.LocalDate).now() == prod.discountProduct[0].start_Date or T(java.time.LocalDate).now() == prod.discountProduct[0].end_Date}">
+							<span class="act-price"
+								th:text="${prod.discountProduct[0].percentage + '%'}"></span>
+							<span class="price"
+								th:text="${'$' + (prod.price - (prod.price * prod.discountProduct[0].percentage / 100))}"></span>
+							<small class="dis-price" th:text="${'$' + prod.price}"></small>
+						</div>
+					</div>
+
+					<!-- Price without discount -->
+					<div class="product-price mt-3">
+						<span th:unless="${prod.discountProduct != null and not #lists.isEmpty(prod.discountProduct)}">
+							<span class="price" th:text="${'$' + prod.price}"></span>
+						</span>
+					</div>
+
+					<!-- Size buttons -->
+					<div class="btn-group" role="group" aria-label="Chọn Size">
+						<th:block th:if="${prodd.empty || prodd.![sizes].isEmpty()}">
+							<div>Sản phẩm này đã hết hàng.</div>
+						</th:block>
+						<th:block th:unless="${prodd.empty}">
+							<th:block th:each="size : ${#numbers.sequence(36, 44)}">
+								<th:block th:if="${prodd.![sizes].contains(size)}">
+									<th:block th:each="item : ${prodd}">
+										<th:block th:if="${item.sizes == size}">
+											<th:block th:if="${item.quantity > 0}">
+												<button type="button" class="btn btn-dark m-2" th:text="${size}"></button>
+											</th:block>
+											<th:block th:if="${item.quantity == 0}">
+												<button type="button" class="btn btn-secondary disabled m-2" th:text="${size}"></button>
+											</th:block>
+										</th:block>
+									</th:block>
+								</th:block>
+								<th:block th:unless="${prodd.![sizes].contains(size)}">
+									<button type="button" class="btn btn-secondary disabled m-2" th:text="${size}"></button>
+								</th:block>
+							</th:block>
+						</th:block>
+					</div>
+
+					<br>
+					<div class="cart mt-4 align-items-center">
+						<a href="/index.html" style="font-weight: bold"
+							class="addCart btn btn-outline-dark text-uppercase mr-2 px-4">Tiếp tục mua sắm</a>
+					</div>
+
+					<div class="product-short mt-3">
+						<span style="font-weight: bold" th:text="${prod.description}"></span>
+					</div>
+
+					<!-- Size chart -->
+					<div style="font-family: Arial, sans-serif;">
+						<h4 style="color: #333; border-top: 1px solid wheat; max-width: 120px;">Size Chart</h4>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Size</th>
+									<th>Japan</th>
+									<th>UK</th>
+									<th>Chest (inches)</th>
+									<th>Waist (inches)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Small</td>
+									<td>36</td>
+									<td>8</td>
+									<td>28</td>
+									<td>38</td>
+								</tr>
+								<tr>
+									<td>Medium</td>
+									<td>40</td>
+									<td>12</td>
+									<td>32</td>
+									<td>42</td>
+								</tr>
+								<tr>
+									<td>Large</td>
+									<td>44</td>
+									<td>16</td>
+									<td>36</td>
+									<td>46</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- Related products -->
+			<div style="border-bottom: groove;" class="mt-5"></div>
+			<h1 style="text-align: center;">Mặt hàng liên quan</h1>
+			<div class="container">
+				<div class="row col-sm-12">
+					<div class="col-md-3 col-sm-3 col-12"
+						th:each="pro, iterStart : ${prod.category.products}">
+						<div class="product-card-shoe">
+							<div class="product-image-container">
+								<a th:href="@{|/shop-single.html/${pro.id}/${#strings.replace(pro.name, ' ', '-')}|}">
+									<img class="product-image-shoe"
+										th:src="@{|/images/${pro.images[0].image}|}"
+										th:alt="${pro.name}">
+								</a>
+							</div>
+							<div class="product-details-shoe">
+								<div class="product-title-shoe text-truncate" th:text="${pro.name}"></div>
+								<!-- Price with discount -->
+								<div th:if="${pro.discountProduct != null and not #lists.isEmpty(pro.discountProduct) and
+									pro.discountProduct[0].active and
+									((T(java.time.LocalDate).now().isAfter(pro.discountProduct[0].start_Date) and
+									(T(java.time.LocalDate).now().isBefore(pro.discountProduct[0].end_Date) or
+									T(java.time.LocalDate).now().isEqual(pro.discountProduct[0].end_Date))) or
+									(T(java.time.LocalDate).now().isEqual(pro.discountProduct[0].start_Date) and
+									T(java.time.LocalDate).now().isBefore(pro.discountProduct[0].end_Date)))}">
+									<span class="product-price-shoe"
+										th:text="${'$' + (pro.price - (pro.price * pro.discountProduct[0].percentage / 100))}"></span>
+									<del class="original-price-shoe" th:text="${'$' + pro.price}"></del>
+								</div>
+								<!-- Price without discount -->
+								<div class="product-price-shoe"
+									th:unless="${pro.discountProduct != null and not #lists.isEmpty(pro.discountProduct) and pro.discountProduct[0].active}">
+									<span th:text="${'$' + pro.price}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.6/dist/umd/popper.min.js"></script>
+</body>
+</html>

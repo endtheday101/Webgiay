@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+<head>
+<title>Shoe Galaxy - Register</title>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="site-sectionn mb-5">
+		<div class="container mb-5">
+			<div class="form">
+				<div class="form-toggle"></div>
+				<div class="form-panel one">
+					<div class="form-header">
+						<h1>Register</h1>
+					</div>
+					<div class="form-content">
+						<form th:action="@{/register/success}" method="post"
+							th:object="${account}">
+							<p class="text-danger">[[${message}]]</p>
+							<div class="form-group">
+								<label for="username">Username</label>
+								<input id="username" placeholder="Username" type="text"
+									name="username" th:field="*{username}" />
+								<i class="text-danger" th:errors="*{username}"></i>
+								<c:if test="${not empty error}">
+									<div class="form-text text-danger">[[${error}]]</div>
+								</c:if>
+							</div>
+							<div class="form-group">
+								<label for="fullname">Fullname</label>
+								<input id="fullname" placeholder="Fullname" type="text"
+									name="fullname" th:field="*{fullname}" />
+								<i class="text-danger" th:errors="*{fullname}"></i>
+							</div>
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input id="email" placeholder="Email" type="text"
+									name="email" th:field="*{email}" />
+								<i class="text-danger" th:errors="*{email}"></i>
+								<c:if test="${not empty errorm}">
+									<div class="form-text text-danger">[[${errorm}]]</div>
+								</c:if>
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input id="password" placeholder="Password" type="password"
+									name="password" th:field="*{password}" />
+								<i class="text-danger" th:errors="*{password}"></i>
+							</div>
+							<div class="form-group">
+								<label for="confirmPassword">Confirm Password</label>
+								<input id="confirmPassword" placeholder="Confirm Password"
+									type="password" name="confirmPassword" />
+								<c:if test="${not empty errorp}">
+									<div class="form-text text-danger">[[${errorp}]]</div>
+								</c:if>
+							</div>
+							<div class="form-group">
+								<button type="submit">Register</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -58,14 +58,18 @@
 			<div class="col-md-3 col-6 col-sm-6" th:each="product : ${products}" th:if="${product.available}">
 				<div class="product-card-shoe">
 					<div class="product-image-container">
-						<img class="product-image-shoe" th:if="${product.images != null and !product.images.isEmpty()}"
-							th:src="@{|/images/${product.images[0].image}|}" th:alt="${product.name}">
-						<img class="product-image-shoe"
-							th:unless="${product.images != null and !product.images.isEmpty()}"
-							src="images/placeholder.jpg" th:alt="${product.name}">
+						<a th:href="@{|/shop-single.html/${product.id}/${#strings.replace(product.name, ' ', '-')}|}">
+							<img class="product-image-shoe" th:if="${product.images != null and !product.images.isEmpty()}"
+								th:src="@{|/images/${product.images[0].image}|}" th:alt="${product.name}">
+							<img class="product-image-shoe"
+								th:unless="${product.images != null and !product.images.isEmpty()}"
+								src="images/placeholder.jpg" th:alt="${product.name}">
+						</a>
 					</div>
 					<div class="product-details-shoe">
-						<div class="product-title-shoe text-truncate" th:text="${product.name}">Product Name</div>
+						<a th:href="@{|/shop-single.html/${product.id}/${#strings.replace(product.name, ' ', '-')}|}" class="text-decoration-none text-dark">
+							<div class="product-title-shoe text-truncate" th:text="${product.name}">Product Name</div>
+						</a>
 						<div class="product-price-shoe" th:text="'$' + ${product.price}">$0</div>
 					</div>
 				</div>
