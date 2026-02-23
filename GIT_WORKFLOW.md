@@ -4,6 +4,18 @@
 - **Repository**: https://github.com/endtheday101/Webgiay
 - **Branch chính**: `main`
 
+
+$ git --version
+git version 2.51.0.windows.1
+
+kimyuuhu@kimyuuhu MINGW64 ~/Downloads/Exclusion/hoctap/test/WebGiay3
+$ git config --global user.name "endtheday101"
+
+kimyuuhu@kimyuuhu MINGW64 ~/Downloads/Exclusion/hoctap/test/WebGiay3
+$ git config --global user.email "endtheday101@gmail.com"
+
+
+
 ---
 
 ## Quy trình làm việc với Git/GitHub
@@ -385,7 +397,7 @@ git push -u origin van/login
 ```
 sau đó check ở pull requests => new pull requests chọn basse: main - compare: van/login xong thì bắt đầu
 
-git checkout main và git pull origin main để lấy tính năng mới
+git checkout main và git pull origin main để lấy tính năng m
 ---
 
 ### Bước 6: Quy tắc làm việc nhóm

@@ -1,0 +1,55 @@
+package com.iuh.entity;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+
+@SuppressWarnings("serial")
+@Data
+@Entity
+@Table(name = "Accounts")
+public class Account implements Serializable {
+
+	@Id
+	@NotBlank(message = "Tên đăng nhập không được để trống")
+	@Column(unique = true)
+	String username;
+	@NotBlank(message = "Mật khẩu không được để trống")
+	String password;
+	@NotBlank(message = "Họ và tên không được để trống")
+	String fullname;
+	@NotBlank(message = "Email không được để trống")
+	@Email(message = "Email không hợp lệ")
+	String email;
+
+	String photo;
+	Boolean available;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+	List<Authority> authorities;
+
+	public Account(String username, String password, String fullname, String email) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.email = email;
+	}
+
+	public Account() {
+		super();
+	}
+}

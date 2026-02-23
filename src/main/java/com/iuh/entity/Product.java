@@ -37,6 +37,14 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product")
     private List<Image> images;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<Size> sizes;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<DiscountProduct> discountProduct;
+
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", price=" + price + ", available=" + available + "]";
